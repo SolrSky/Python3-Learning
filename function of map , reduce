@@ -1,0 +1,19 @@
+# map函数，是内建函数，传入参数需要两个，一个是函数，另一个是Iterator，作用是把传入的函数，作用在序列的每一个元素上，最后返回一个新的Iterator。
+
+# TEST 1
+# 利用map()函数，把用户输入的不规范的英文名字，变为首字母大写，其他小写的规范名字。输入：['adam', 'LISA', 'barT']，输出：['Adam', 'Lisa', 'Bart']
+
+
+def normalize(name):
+    return name.capitalize()  #capitalize()方法，能将字符串的第一个字母大写，其余字母小写
+
+L1 = ['adam', 'LISA', 'barT']
+L2 = list(map(normalize,L1))
+print(L2)
+
+
+# reduce函数，与map类似，也是传入一个函数和一个序列，但是传入的这个函数需要能够接收两个参数，reduce的实际作用，就是将序列的前两个参数，
+# 运用传入的函数进行运算，将所得结果和序列中的后一个参数再通过传入的函数运算，循环工作直到序列中的参数全部运算完。
+
+# TEST 2
+# 
