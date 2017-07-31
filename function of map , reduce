@@ -1,7 +1,8 @@
 # map函数，是内建函数，传入参数需要两个，一个是函数，另一个是Iterator，作用是把传入的函数，作用在序列的每一个元素上，最后返回一个新的Iterator。
 
 # TEST 1
-# 利用map()函数，把用户输入的不规范的英文名字，变为首字母大写，其他小写的规范名字。输入：['adam', 'LISA', 'barT']，输出：['Adam', 'Lisa', 'Bart']
+# 利用map()函数，把用户输入的不规范的英文名字，变为首字母大写，其他小写的规范名字。输入：['adam', 'LISA', 'barT']，
+# 输出：['Adam', 'Lisa', 'Bart']
 
 
 def normalize(name):
@@ -16,4 +17,78 @@ print(L2)
 # 运用传入的函数进行运算，将所得结果和序列中的后一个参数再通过传入的函数运算，循环工作直到序列中的参数全部运算完。
 
 # TEST 2
-# 
+# Python提供的sum()函数可以接受一个list并求和，请编写一个prod()函数，可以接受一个list并利用reduce()求积
+
+from functools import reduce
+def prod(L):
+    def f(x,y):
+        return x*y
+    return reduce(f,L)
+
+L = [1,2,3,4,5,6]
+L2 = prod(L)
+print(L2)
+
+# Test 3 
+# 综合利用map和reduce 将str转为int类型
+
+CHAR_TO_INT = {
+    '0': 0,
+    '1': 1,
+    '2': 2,
+    '3': 3,
+    '4': 4,
+    '5': 5,
+    '6': 6,
+    '7': 7,
+    '8': 8,
+    '9': 9
+}
+
+def str2int(s):
+    ints = map(lambda ch : CHAR_TO_INT[ch], s)
+    return reduce(lambda x,y : x*10+y,ints)
+
+print(str2int('0'))
+print(str2int('123400'))
+print(str2int('00012345'))
+
+
+# Test 4 
+# 综合利用map和reduce 将str转为float类型
+
+CHAR_TO_FLOAT = {
+    '0': 0,
+    '1': 1,
+    '2': 2,
+    '3': 3,
+    '4': 4,
+    '5': 5,
+    '6': 6,
+    '7': 7,
+    '8': 8,
+    '9': 9,
+    '.': -1
+}
+
+def str2float(s):
+    nums = map(lambda ch: CHAR_TO_FLOAT[ch], s)
+    point = 0
+    def to_float(f, n):
+        nonlocal point
+        if n == -1:
+            point = 1
+            return f
+        if point == 0:
+            return f * 10 + n
+        else:
+            point = point * 10
+            return f + n / point
+    return reduce(to_float, nums, 0.0)
+
+print(str2float('0'))
+print(str2float('123.456'))
+print(str2float('123.45600'))
+print(str2float('0.1234'))
+print(str2float('.1234'))
+print(str2float('120.0034'))
